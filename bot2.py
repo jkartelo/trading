@@ -71,11 +71,13 @@ def main():
             # bidding for BONDS
             ID+=1
             write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 5})
+            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 999, "size": 5})
             exchange_message = read_from_exchange(exchange)
             if exchange_message["type"] in private:
                 print("MI:", exchange_message, file=sys.stderr)
             ID+=1
             write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1002, "size": 5})
+            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1001, "size": 5})
             exchange_message = read_from_exchange(exchange)
             if exchange_message["type"] in private:
                 print("MI:", exchange_message, file=sys.stderr)
