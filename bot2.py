@@ -10,6 +10,7 @@ from __future__ import print_function
 import sys
 import socket
 import json
+import time
 
 # ~~~~~============== CONFIGURATION  ==============~~~~~
 # replace REPLACEME with your team name!
@@ -42,7 +43,6 @@ def read_from_exchange(exchange):
     return json.loads(exchange.readline())
 
 # ~~~~~============== TRADING CODE ==============~~~~~
-ID = 0
 
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
@@ -55,15 +55,18 @@ def main():
     # Since many write messages generate marketdata, this will cause an
     # exponential explosion in pending messages. Please, don't do that!
     print("The exchange replied:", hello_from_exchange, file=sys.stderr)
-    for i in range(20):
-        ID+=1
-        write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 40})
-        exchange_message = read_from_exchange(exchange)
-        print("The exchange replied:", exchange_message, file=sys.stderr)
-        ID+=1
-        write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1002, "size": 40})
-        exchange_message = read_from_exchange(exchange)
-        print("The exchange replied:", exchange_message, file=sys.stderr)
+    ID = 0
+    while(True):
+        for i in range(20):
+            ID+=1
+            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 40})
+            exchange_message = read_from_exchange(exchange)
+            print("The exchange replied:", exchange_message, file=sys.stderr)
+            ID+=1
+            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1002, "size": 40})
+            exchange_message = read_from_exchange(exchange)
+            print("The exchange replied:", exchange_message, file=sys.stderr)
+        time.sleep(5)
     
     #while(True):
         #exchange_message = read_from_exchange(exchange)
