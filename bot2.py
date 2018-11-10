@@ -61,18 +61,21 @@ def main():
             ID+=1
             write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 40})
             exchange_message = read_from_exchange(exchange)
-            if exchange_message["type"] != "book":
+            if exchange_message["type"] != "book" and exchange_message["type"] != "trade":
                 print("The exchange replied:", exchange_message, file=sys.stderr)
             ID+=1
             write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1002, "size": 40})
             exchange_message = read_from_exchange(exchange)
-            if exchange_message["type"] != "book":
-            print("The exchange replied:", exchange_message, file=sys.stderr)
-                exchange_message = read_from_exchange(exchange)
-            with open('data.txt', 'w') as outfile:
+            if exchange_message["type"] != "book" and exchange_message["type"] != "trade":
+                print("The exchange replied:", exchange_message, file=sys.stderr)
+            exchange_message = read_from_exchange(exchange)
+            with open('book.txt', 'w') as outfile:
                 if exchange_message["type"] == "book":
                     json.dump(exchange_message, outfile)
-        time.sleep(5)
+            with open('trade.txt', 'w') as outfile:
+                if exchange_message["type"] == "trade":
+                    json.dump(exchange_message, outfile)
+        time.sleep(1)
     
     #while(True):
         #exchange_message = read_from_exchange(exchange)
