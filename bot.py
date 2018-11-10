@@ -42,7 +42,7 @@ def read_from_exchange(exchange):
     return json.loads(exchange.readline())
 
 # ~~~~~============== TRADING CODE ==============~~~~~
-order_id = 0
+ID = 0
 
 
 # ~~~~~============== MAIN LOOP ==============~~~~~
@@ -56,9 +56,9 @@ def main():
     # Since many write messages generate marketdata, this will cause an
     # exponential explosion in pending messages. Please, don't do that!
     print("The exchange replied:", hello_from_exchange, file=sys.stderr)
-    for order_id in range(20):
-        write_to_exchange(exchange, {"type": "add", "order_id": order_id +=1, "symbol": "BOND", "dir": "BUY", "price": 998, "SIZE": 40}
-        write_to_exchange(exchange, {"type": "add", "order_id": order_id +=1, "symbol": "BOND", "dir": "SELL", "price": 1002, "SIZE": 40}
+    for ID in range(20):
+        write_to_exchange(exchange, {"type": "add", "order_id": ID +=1, "symbol": "BOND", "dir": "BUY", "price": 998, "SIZE": 40}
+        write_to_exchange(exchange, {"type": "add", "order_id": ID +=1, "symbol": "BOND", "dir": "SELL", "price": 1002, "SIZE": 40}
 
 if __name__ == "__main__":
     main()
