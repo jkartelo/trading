@@ -57,7 +57,6 @@ def main():
     print("The exchange replied:", hello_from_exchange, file=sys.stderr)
     i = 0
     for i in range(20):
-        print("bla")
         write_to_exchange(exchange, {"type": "add", "order_id": 2*ID, "symbol": "BOND", "dir": "BUY", "price": 998, "SIZE": 40})
         exchange_message = read_from_exchange(exchange)
         write_to_exchange(exchange, {"type": "add", "order_id": 2*ID+1, "symbol": "BOND", "dir": "SELL", "price": 1002, "SIZE": 40})
