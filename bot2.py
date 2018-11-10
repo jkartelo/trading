@@ -68,24 +68,27 @@ def main():
     public = ["open", "close", "trade", "book"]
     private = ["ack", "reject", "fill", "out"]
     while(True):
-            # bidding for BONDS - bigger profit_loss
-            ID+=1
-            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 5})
-            exchange_message = read_from_exchange(exchange)
-            if exchange_message["type"] in private:
-                print("MI:", exchange_message, file=sys.stderr)
-            ID+=1
-            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1002, "size": 5})
-            # bidding for BONDS - smaller profit_loss
-            ID+=1
-            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 999, "size": 5})
-            exchange_message = read_from_exchange(exchange)
-            if exchange_message["type"] in private:
-                print("MI:", exchange_message, file=sys.stderr)
-            ID+=1
-            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1001, "size": 5})
-            if exchange_message["type"] in private:
-                print("MI:", exchange_message, file=sys.stderr)
+           i = 0 
+           for i in range(40): 
+                # bidding for BONDS - bigger profit_loss
+                ID+=1
+                write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 5})
+                exchange_message = read_from_exchange(exchange)
+                if exchange_message["type"] in private:
+                    print("MI:", exchange_message, file=sys.stderr)
+                ID+=1
+                write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1002, "size": 5})
+                # bidding for BONDS - smaller profit_loss
+                ID+=1
+                write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 999, "size": 5})
+                exchange_message = read_from_exchange(exchange)
+                if exchange_message["type"] in private:
+                    print("MI:", exchange_message, file=sys.stderr)
+                ID+=1
+                write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1001, "size": 5})
+                if exchange_message["type"] in private:
+                    print("MI:", exchange_message, file=sys.stderr)
+                time.sleep(5)
                 
             #writing/parsing exchange to json files
             if exchange_message["type"] == "book":
@@ -102,8 +105,6 @@ def main():
                 write_to_json('open.txt',exchange_message)
             if exchange_message["type"] == "close":
                 write_to_json('close.txt',exchange_message)
-    
-            time.sleep(0.1)
 
 if __name__ == "__main__":
     main()
