@@ -51,6 +51,11 @@ def write_to_json(file, message):
 """def write_to_txt(file, data):
     with open(file, 'a+') as openfile:
         openfile.write(data) """
+
+def fair_price_for_ADR(file):
+    with open(file) as f:
+        data = [int(line) for line in f]
+     print("The average value is ", sum(data)/len(data))
         
 
 # ~~~~~============== MAIN LOOP ==============~~~~~
@@ -89,6 +94,13 @@ def main():
             if exchange_message["type"] in private:
                 print("MI:", exchange_message, file=sys.stderr)
         time.sleep(5)
+
+        for i in range(40):
+            ID+=1
+            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 5})
+            exchange_message = read_from_exchange(exchange)
+            if exchange_message["type"] in private:
+                print("MI:", exchange_message, file=sys.stderr)
                 
         #writing/parsing exchange to json files
         if exchange_message["type"] == "book":
