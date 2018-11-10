@@ -94,8 +94,8 @@ def main():
         if exchange_message["type"] == "book":
             write_to_json('book.txt', exchange_message)
             if exchange_message["symbol"] == "VALBZ":
-                write_to_json('book_buy_prices_for_ADR_2.txt', exchange_message["buy"]["PRICE"])
-                write_to_json('book_sell_prices_for_ADR_2.txt', exchange_message["sell"]["PRICE"])
+                write_to_json('book_buy_prices_for_ADR.txt', exchange_message["buy"])
+                write_to_json('book_sell_prices_for_ADR.txt', exchange_message["sell"])
             if exchange_message["symbol"] == "BOND":
                 write_to_json('book_buy_prices_for_BOND.txt', exchange_message["buy"])
                 write_to_json('book_sell_prices_for_BOND.txt', exchange_message["sell"])
