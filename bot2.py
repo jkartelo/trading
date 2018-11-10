@@ -44,6 +44,7 @@ def read_from_exchange(exchange):
 
 # ~~~~~============== TRADING CODE ==============~~~~~
 
+"""
 def write_to_json(file, message):
 
     with open(file) as f:
@@ -53,6 +54,7 @@ def write_to_json(file, message):
 
     with open(file, 'w') as f:
         json.dump(data, f)
+"""
 
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
@@ -79,11 +81,13 @@ def main():
             if exchange_message["type"] != "book" and exchange_message["type"] != "trade":
                 print("The exchange replied:", exchange_message, file=sys.stderr)
             exchange_message = read_from_exchange(exchange)
+            """
             if exchange_message["type"] == "book":
                 write_to_json('book.txt', exchange_message)
             exchange_message = read_from_exchange(exchange)
             if exchange_message["type"] == "trade":
-                write_to_json('trade.txt',exchange_message)    
+                write_to_json('trade.txt',exchange_message)
+            """    
             time.sleep(0.01)
 
 if __name__ == "__main__":
