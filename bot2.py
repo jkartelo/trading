@@ -52,12 +52,6 @@ def write_to_json(file, message):
     with open(file, 'a+') as openfile:
         openfile.write(data) """
 
-def fair_price_for_ADR(file):
-    with open(file) as f:
-        data = [int(line) for line in f]
-     print("The average value is ", sum(data)/len(data))
-        
-
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
 def main():
@@ -93,15 +87,37 @@ def main():
             write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1001, "size": 5})
             if exchange_message["type"] in private:
                 print("MI:", exchange_message, file=sys.stderr)
-        time.sleep(5)
-
-        for i in range(40):
+        time.sleep(15)
+        
+        adr_buy_prices = [4183, 4184, 4185, 4186, 4187, 4188, 4189, 4190, 4191, 4192, 4193, 4194, 4195]
+        adr_sell_prices = []
+        for price in adr_buy_prices:
             ID+=1
-            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 5})
+            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "VALBZ", "dir": "BUY", "price": price, "size": 2})
             exchange_message = read_from_exchange(exchange)
             if exchange_message["type"] in private:
                 print("MI:", exchange_message, file=sys.stderr)
-                
+        time.sleep(1)
+        i = 0
+        for i in range(10):
+            ID+=1
+            write_to_exchange(exchange, {"type": "convert", "order_id": ID, "symbol": "VALE", "dir": "BUY", "size": 2})
+            exchange_message = read_from_exchange(exchange)
+            if exchange_message["type"] in private:
+                print("MI:", exchange_message, file=sys.stderr)
+        time.sleep(1)
+        i = 0
+        for i in range(10):
+            ID+=1
+            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "VALBZ", "dir": "BUY", "price": 4240, "size": 2})
+            exchange_message = read_from_exchange(exchange)
+            if exchange_message["type"] in private:
+                print("MI:", exchange_message, file=sys.stderr)
+        time.sleep(1)
+        
+
+        
+        
         #writing/parsing exchange to json files
         if exchange_message["type"] == "book":
             write_to_json('book.txt', exchange_message)
