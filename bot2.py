@@ -68,7 +68,7 @@ def main():
     public = ["open", "close", "trade", "book"]
     private = ["ack", "reject", "fill", "out"]
     while(True):
-            # bidding for BONDS
+            # bidding for BONDS - bigger profit_loss
             ID+=1
             write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 5})
             exchange_message = read_from_exchange(exchange)
@@ -76,9 +76,17 @@ def main():
                 print("MI:", exchange_message, file=sys.stderr)
             ID+=1
             write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1002, "size": 5})
+            # bidding for BONDS - smaller profit_loss
+            ID+=1
+            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 999, "size": 5})
             exchange_message = read_from_exchange(exchange)
             if exchange_message["type"] in private:
                 print("MI:", exchange_message, file=sys.stderr)
+            ID+=1
+            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1001, "size": 5})
+            if exchange_message["type"] in private:
+                print("MI:", exchange_message, file=sys.stderr)
+                
             #writing/parsing exchange to json files
             if exchange_message["type"] == "book":
                 write_to_json('book.txt', exchange_message)
