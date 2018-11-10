@@ -48,6 +48,11 @@ def write_to_json(file, message):
     with open(file, 'a+') as f:
         json.dump(message, f)
 
+"""def write_to_txt(file, data):
+    with open(file, 'a+') as openfile:
+        openfile.write(data) """
+        
+
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
 def main():
@@ -63,6 +68,7 @@ def main():
     public = ["open", "close", "trade", "book"]
     private = ["ack", "reject", "fill", "out"]
     while(True):
+            # bidding for BONDS
             ID+=1
             write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 5})
             exchange_message = read_from_exchange(exchange)
@@ -73,10 +79,15 @@ def main():
             exchange_message = read_from_exchange(exchange)
             if exchange_message["type"] in private:
                 print("MI:", exchange_message, file=sys.stderr)
-            
+            #writing/parsing exchange to json files
             if exchange_message["type"] == "book":
                 write_to_json('book.txt', exchange_message)
-            exchange_message = read_from_exchange(exchange)
+                if exchange_message["symbol"] == "VALBZ":
+                    write_to_json('book_buy_prices_for_ADR.txt', exchange_message["buy"])
+                    write_to_json('book_sell_prices_for_ADR.txt', exchange_message["sell"])
+                if exchange_message["symbol"] == "BOND":
+                    write_to_json('book_buy_prices_for_BOND.txt', exchange_message["buy"])
+                    write_to_json('book_sell_prices_for_BOND.txt', exchange_message["sell"])
             if exchange_message["type"] == "trade":
                 write_to_json('trade.txt',exchange_message)
             if exchange_message["type"] == "open":
