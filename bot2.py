@@ -46,12 +46,7 @@ def read_from_exchange(exchange):
 
 def write_to_json(file, message):
 
-    with open(file) as f:
-        data = json.load(f)
-
-    data.update(message)
-
-    with open(file, 'w') as f:
+    with open(file, 'a+') as f:
         json.dump(data, f)
 
 # ~~~~~============== MAIN LOOP ==============~~~~~
@@ -69,7 +64,6 @@ def main():
     public = ["open", "close", "trade", "book"]
     private = ["ack", "reject", "fill", "out"]
     while(True):
-        for i in range(20):
             ID+=1
             write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 5})
             exchange_message = read_from_exchange(exchange)
@@ -80,7 +74,7 @@ def main():
             exchange_message = read_from_exchange(exchange)
             if exchange_message["type"] in private:
                 print("MI:", exchange_message, file=sys.stderr)
-            """
+            
             if exchange_message["type"] == "book":
                 write_to_json('book.txt', exchange_message)
             exchange_message = read_from_exchange(exchange)
@@ -90,7 +84,6 @@ def main():
                 write_to_json('open.txt',exchange_message)
             if exchange_message["type"] == "close":
                 write_to_json('close.txt',exchange_message)
-            """    
             time.sleep(1)
 
 if __name__ == "__main__":
