@@ -88,7 +88,7 @@ def main():
             if exchange_message["type"] == "trade":
                 write_to_json('trade.txt',exchange_message)
             """    
-            time.sleep(0.01)
+            time.sleep(0.1)
 
 if __name__ == "__main__":
     main()
