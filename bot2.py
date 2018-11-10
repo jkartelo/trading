@@ -44,7 +44,6 @@ def read_from_exchange(exchange):
 
 # ~~~~~============== TRADING CODE ==============~~~~~
 
-"""
 def write_to_json(file, message):
 
     with open(file) as f:
@@ -54,7 +53,6 @@ def write_to_json(file, message):
 
     with open(file, 'w') as f:
         json.dump(data, f)
-"""
 
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
@@ -68,25 +66,30 @@ def main():
     # exponential explosion in pending messages. Please, don't do that!
     print("The exchange replied:", hello_from_exchange, file=sys.stderr)
     ID = 0
+    public = ["open", "close", "trade", "book"]
+    private = ["ack", "reject", "fill", "out"]
     while(True):
         for i in range(20):
             ID+=1
             write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 5})
             exchange_message = read_from_exchange(exchange)
-            if exchange_message["type"] != "book" and exchange_message["type"] != "trade":
-                print("The exchange replied:", exchange_message, file=sys.stderr)
+            if exchange_message["type"] in private:
+                print("MI:", exchange_message, file=sys.stderr)
             ID+=1
             write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1002, "size": 5})
             exchange_message = read_from_exchange(exchange)
-            if exchange_message["type"] != "book" and exchange_message["type"] != "trade":
-                print("The exchange replied:", exchange_message, file=sys.stderr)
-            exchange_message = read_from_exchange(exchange)
+            if exchange_message["type"] in private:
+                print("MI:", exchange_message, file=sys.stderr)
             """
             if exchange_message["type"] == "book":
                 write_to_json('book.txt', exchange_message)
             exchange_message = read_from_exchange(exchange)
             if exchange_message["type"] == "trade":
                 write_to_json('trade.txt',exchange_message)
+            if exchange_message["type"] == "open":
+                write_to_json('open.txt',exchange_message)
+            if exchange_message["type"] == "close":
+                write_to_json('close.txt',exchange_message)
             """    
             time.sleep(1)
 
