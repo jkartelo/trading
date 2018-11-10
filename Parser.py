@@ -21,13 +21,17 @@ text_file.close()
 
 counter=0
 sum=0
+min=100000
 with open("Output.txt", 'r') as data:
   for x in data.read().split():
       x = int(x)
       if int(x) > 3000:
           sum = sum + x
           counter = counter + 1
+          if min > x:
+              min = x
           print(x)
 
 print ("bla bla", sum/counter)
+print min
 

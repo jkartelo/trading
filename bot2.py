@@ -89,6 +89,16 @@ def main():
             if exchange_message["type"] in private:
                 print("MI:", exchange_message, file=sys.stderr)
         time.sleep(5)
+        adr_buy_prices = [4183, 4184, 4185, 4186, 4187, 4188, 4189, 4190, 4191, 4192, 4193, 4194, 4195]
+        i = 0
+        for price in adr_buy_prices:
+            ID+=1
+            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "VALBZ", "dir": "BUY", "price": price, "size": 5})
+            exchange_message = read_from_exchange(exchange)
+            if exchange_message["type"] in private:
+                print("MI:", exchange_message, file=sys.stderr)
+        time.sleep(1)
+        
                 
         #writing/parsing exchange to json files
         if exchange_message["type"] == "book":
