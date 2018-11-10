@@ -91,16 +91,25 @@ def main():
         time.sleep(5)
                 
         #writing/parsing exchange to json files
-        """if exchange_message["type"] == "book":
+        if exchange_message["type"] == "book":
             write_to_json('book.txt', exchange_message)
             if exchange_message["symbol"] == "VALBZ":
                 write_to_json('book_buy_prices_for_ADR.txt', exchange_message["buy"])
                 write_to_json('book_sell_prices_for_ADR.txt', exchange_message["sell"])
             if exchange_message["symbol"] == "BOND":
                 write_to_json('book_buy_prices_for_BOND.txt', exchange_message["buy"])
-                write_to_json('book_sell_prices_for_BOND.txt', exchange_message["sell"])"""
+                write_to_json('book_sell_prices_for_BOND.txt', exchange_message["sell"])
+            if exchange_message["symbol"] == "VALE":
+                write_to_json('book_buy_prices_for_VALE.txt', exchange_message["buy"])
+                write_to_json('book_sell_prices_for_VALE.txt', exchange_message["sell"])
         if exchange_message["type"] == "trade":
             write_to_json('trade.txt',exchange_message)
+            if exchange_message["symbol"] == "VALBZ":
+                write_to_json('trade_buy_prices_for_ADR.txt', exchange_message["buy"])
+                write_to_json('trade_sell_prices_for_ADR.txt', exchange_message["sell"])
+            if exchange_message["symbol"] == "VALE":
+                write_to_json('trade_buy_prices_for_VALE.txt', exchange_message["buy"])
+                write_to_json('trade_sell_prices_for_VALE.txt', exchange_message["sell"])
         if exchange_message["type"] == "open":
             write_to_json('open.txt',exchange_message)
         if exchange_message["type"] == "close":
