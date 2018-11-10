@@ -55,18 +55,20 @@ def main():
     # Since many write messages generate marketdata, this will cause an
     # exponential explosion in pending messages. Please, don't do that!
     print("The exchange replied:", hello_from_exchange, file=sys.stderr)
-    while(True):
-        write_to_exchange(exchange, {"type": "add", "order_id": 2*ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 40})
+    for i in range(20):
+        ID+=1
+        write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 40})
         exchange_message = read_from_exchange(exchange)
         print("The exchange replied:", exchange_message, file=sys.stderr)
-        write_to_exchange(exchange, {"type": "add", "order_id": 2*ID+1, "symbol": "BOND", "dir": "SELL", "price": 1002, "size": 40})
+        ID+=1
+        write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1002, "size": 40})
         exchange_message = read_from_exchange(exchange)
         print("The exchange replied:", exchange_message, file=sys.stderr)
     
-    while(True):
-        exchange_message = read_from_exchange(exchange)
-        with open('data.txt', 'w') as outfile:
-            json.dump(exchange_message, outfile)
+    #while(True):
+        #exchange_message = read_from_exchange(exchange)
+        #with open('data.txt', 'w') as outfile:
+            #json.dump(exchange_message, outfile)
 
 
 if __name__ == "__main__":
