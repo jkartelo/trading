@@ -88,7 +88,7 @@ def main():
             write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1001, "size": 5})
             if exchange_message["type"] in private:
                 print("MI:", exchange_message, file=sys.stderr)
-            time.sleep(5)
+        time.sleep(5)
                 
         #writing/parsing exchange to json files
         """if exchange_message["type"] == "book":
