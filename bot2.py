@@ -45,9 +45,8 @@ def read_from_exchange(exchange):
 # ~~~~~============== TRADING CODE ==============~~~~~
 
 def write_to_json(file, message):
-
     with open(file, 'a+') as f:
-        json.dump(data, f)
+        json.dump(message, f)
 
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
