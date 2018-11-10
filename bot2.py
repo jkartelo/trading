@@ -68,43 +68,43 @@ def main():
     public = ["open", "close", "trade", "book"]
     private = ["ack", "reject", "fill", "out"]
     while(True):
-           i = 0 
-           for i in range(40): 
-                # bidding for BONDS - bigger profit_loss
-                ID+=1
-                write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 5})
-                exchange_message = read_from_exchange(exchange)
-                if exchange_message["type"] in private:
-                    print("MI:", exchange_message, file=sys.stderr)
-                ID+=1
-                write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1002, "size": 5})
-                # bidding for BONDS - smaller profit_loss
-                ID+=1
-                write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 999, "size": 5})
-                exchange_message = read_from_exchange(exchange)
-                if exchange_message["type"] in private:
-                    print("MI:", exchange_message, file=sys.stderr)
-                ID+=1
-                write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1001, "size": 5})
-                if exchange_message["type"] in private:
-                    print("MI:", exchange_message, file=sys.stderr)
-                time.sleep(5)
+        i = 0 
+        for i in range(40): 
+            # bidding for BONDS - bigger profit_loss
+            ID+=1
+            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 998, "size": 5})
+            exchange_message = read_from_exchange(exchange)
+            if exchange_message["type"] in private:
+                print("MI:", exchange_message, file=sys.stderr)
+            ID+=1
+            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1002, "size": 5})
+            # bidding for BONDS - smaller profit_loss
+            ID+=1
+            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "BUY", "price": 999, "size": 5})
+            exchange_message = read_from_exchange(exchange)
+            if exchange_message["type"] in private:
+                print("MI:", exchange_message, file=sys.stderr)
+            ID+=1
+            write_to_exchange(exchange, {"type": "add", "order_id": ID, "symbol": "BOND", "dir": "SELL", "price": 1001, "size": 5})
+            if exchange_message["type"] in private:
+                print("MI:", exchange_message, file=sys.stderr)
+        time.sleep(5)
                 
-            #writing/parsing exchange to json files
-            if exchange_message["type"] == "book":
-                write_to_json('book.txt', exchange_message)
-                if exchange_message["symbol"] == "VALBZ":
-                    write_to_json('book_buy_prices_for_ADR.txt', exchange_message["buy"])
-                    write_to_json('book_sell_prices_for_ADR.txt', exchange_message["sell"])
-                if exchange_message["symbol"] == "BOND":
-                    write_to_json('book_buy_prices_for_BOND.txt', exchange_message["buy"])
-                    write_to_json('book_sell_prices_for_BOND.txt', exchange_message["sell"])
-            if exchange_message["type"] == "trade":
-                write_to_json('trade.txt',exchange_message)
-            if exchange_message["type"] == "open":
-                write_to_json('open.txt',exchange_message)
-            if exchange_message["type"] == "close":
-                write_to_json('close.txt',exchange_message)
+        #writing/parsing exchange to json files
+        """if exchange_message["type"] == "book":
+            write_to_json('book.txt', exchange_message)
+            if exchange_message["symbol"] == "VALBZ":
+                write_to_json('book_buy_prices_for_ADR.txt', exchange_message["buy"])
+                write_to_json('book_sell_prices_for_ADR.txt', exchange_message["sell"])
+            if exchange_message["symbol"] == "BOND":
+                write_to_json('book_buy_prices_for_BOND.txt', exchange_message["buy"])
+                write_to_json('book_sell_prices_for_BOND.txt', exchange_message["sell"])"""
+        if exchange_message["type"] == "trade":
+            write_to_json('trade.txt',exchange_message)
+        if exchange_message["type"] == "open":
+            write_to_json('open.txt',exchange_message)
+        if exchange_message["type"] == "close":
+            write_to_json('close.txt',exchange_message)
 
 if __name__ == "__main__":
     main()
