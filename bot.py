@@ -57,8 +57,8 @@ def main():
     print("The exchange replied:", hello_from_exchange, file=sys.stderr)
     ID = 0
     for ID in range(20):
-        write_to_exchange(exchange, {"type": "add", "order_id": ID+=1, "symbol": "BOND", "dir": "BUY", "price": 998, "SIZE": 40})
-        write_to_exchange(exchange, {"type": "add", "order_id": ID+=1, "symbol": "BOND", "dir": "SELL", "price": 1002, "SIZE": 40})
+        write_to_exchange(exchange, {"type": "add", "order_id": 2*ID, "symbol": "BOND", "dir": "BUY", "price": 998, "SIZE": 40})
+        write_to_exchange(exchange, {"type": "add", "order_id": 2*ID+1, "symbol": "BOND", "dir": "SELL", "price": 1002, "SIZE": 40})
 
 if __name__ == "__main__":
     main()
