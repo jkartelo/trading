@@ -75,13 +75,7 @@ def main():
             with open('trade.txt', 'w') as outfile:
                 if exchange_message["type"] == "trade":
                     json.dump(exchange_message, outfile)
-        time.sleep(1)
-    
-    #while(True):
-        #exchange_message = read_from_exchange(exchange)
-        #with open('data.txt', 'w') as outfile:
-            #json.dump(exchange_message, outfile)
-
+        time.sleep(0.01)
 
 if __name__ == "__main__":
     main()
