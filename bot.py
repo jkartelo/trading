@@ -58,7 +58,10 @@ def main():
     i = 0
     for i in range(20):
         write_to_exchange(exchange, {"type": "add", "order_id": 2*ID, "symbol": "BOND", "dir": "BUY", "price": 999, "SIZE": 40})
+        exchange_message = read_from_exchange(exchange)
         write_to_exchange(exchange, {"type": "add", "order_id": 2*ID+1, "symbol": "BOND", "dir": "SELL", "price": 1001, "SIZE": 40})
+        exchange_message = read_from_exchange(exchange)
+
 
 if __name__ == "__main__":
     main()
